@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.andika.newssample.databinding.ItemNewsBinding
 import app.andika.newssample.model.Article
+import app.andika.newssample.ui.NewsFragment
+import app.andika.newssample.ui.NewsFragmentDirections
 import com.bumptech.glide.Glide
 
 class NewsAdapter(public val activity: Activity) : ListAdapter<Article, NewsAdapter.ViewHolder>(VideoListDiffCallback()) {
@@ -37,8 +39,8 @@ class NewsAdapter(public val activity: Activity) : ListAdapter<Article, NewsAdap
 
     private fun createDetailOnClickListener(news: Article): View.OnClickListener {
         return View.OnClickListener {
-//            val directions = MainFragmentDirections.actToDetailFragment(video.id)
-//            it.findNavController().navigate(directions)
+            val directions = NewsFragmentDirections.actionNewsFragmentToNewsDetailFragment(news)
+            it.findNavController().navigate(directions)
         }
     }
 
