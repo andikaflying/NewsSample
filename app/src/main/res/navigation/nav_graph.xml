@@ -23,5 +23,8 @@
         android:label="@string/news_detail_fragment_label"
         tools:layout="@layout/fragment_news_detail">
 
+        <argument
+            android:name="selectedArticle"
+            app:argType="app.andika.newssample.model.Article" />
     </fragment>
 </navigation>
