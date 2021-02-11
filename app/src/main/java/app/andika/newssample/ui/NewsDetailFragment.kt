@@ -30,6 +30,9 @@ class NewsDetailFragment : BaseFragment<FragmentNewsDetailBinding>()  {
         binding.tvAuthor.setText(selectedArticle.author)
         binding.tvContent.setText(Html.fromHtml(selectedArticle.content).toString())
         binding.tvTitle.setText(selectedArticle.title)
-        Glide.with(this).load(selectedArticle.urlToImage).into(binding.ivNews)
+        Glide.with(this)
+            .load(selectedArticle.urlToImage)
+            .placeholder(R.drawable.ic_placeholder)
+            .into(binding.ivNews)
     }
 }

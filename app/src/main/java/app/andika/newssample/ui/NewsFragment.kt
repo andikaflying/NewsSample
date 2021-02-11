@@ -15,6 +15,7 @@ import app.andika.newssample.utilities.QUERY
 import app.andika.newssample.utilities.connectivity.ConnectivityReceiver
 import app.andika.newssample.utilities.dialog.GeneralDialog
 import app.andika.newssample.viewmodel.NewsViewModel
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

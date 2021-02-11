@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import app.andika.newssample.R
 import app.andika.newssample.databinding.ItemNewsBinding
 import app.andika.newssample.model.Article
 import app.andika.newssample.ui.NewsFragment
@@ -55,6 +56,7 @@ class NewsAdapter(public val activity: Activity) : ListAdapter<Article, NewsAdap
 
             Glide.with(activity)
                 .load(news.urlToImage)
+                .placeholder(R.drawable.ic_placeholder)
                 .into(itemNewsBinding.ivImage)
         }
     }
