@@ -4,10 +4,20 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class AllNewsResponse(
-    val articles: List<Article>,
+    val articles: List<Article>?,
     val status: String?,
-    val totalResults: Int
+    val totalResults: Int?
 ) : Parcelable {
+    var throwable: Throwable?
+        get() = null
+        set(value) {
+            throwable = value
+        }
+
+    constructor(throwable: Throwable)  : this(null, null, null) {
+        this.throwable = throwable
+    }
+
     constructor(parcel: Parcel) : this(
         TODO("articles"),
         parcel.readString(),
@@ -17,7 +27,7 @@ data class AllNewsResponse(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(status)
-        parcel.writeInt(totalResults)
+        parcel.writeInt(totalResults!!)
     }
 
     override fun describeContents(): Int {

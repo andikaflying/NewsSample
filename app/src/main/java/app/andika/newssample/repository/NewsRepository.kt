@@ -30,7 +30,7 @@ class NewsRepository @Inject constructor(
             }
 
             override fun onFailure(call: Call<AllNewsResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                newsListResponse.value = AllNewsResponse(t)
             }
 
         })
