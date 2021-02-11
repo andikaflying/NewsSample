@@ -11,9 +11,9 @@
 
 
         <ImageView
-            android:id="@+id/imvNews"
+            android:id="@+id/ivNews"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -51,11 +51,11 @@
             android:id="@+id/imbShare"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/ic_share"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imvNews"
-            android:background="@drawable/ic_share" />
+            app:layout_constraintTop_toBottomOf="@+id/ivNews" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
