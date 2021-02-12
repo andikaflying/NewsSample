@@ -64,6 +64,8 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>() {
                             binding.rvNews.visibility = View.GONE
                             binding.tvMessageNotFound.visibility = View.VISIBLE
                         }
+
+                        newsViewModel.saveAllNews(it.articles!!)
                     } else {
                         GeneralDialog.displayNetworkErrorDialog(requireActivity())
                     }

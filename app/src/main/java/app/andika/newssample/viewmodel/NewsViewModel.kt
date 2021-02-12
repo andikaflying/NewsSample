@@ -4,6 +4,7 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import app.andika.newssample.model.AllNewsResponse
+import app.andika.newssample.model.Article
 import app.andika.newssample.repository.NewsRepository
 
 class NewsViewModel @ViewModelInject public constructor(
@@ -20,6 +21,18 @@ class NewsViewModel @ViewModelInject public constructor(
         allNewsMediatorLiveData.addSource(newsListLiveData, allNewsMediatorLiveData::setValue)
 
         return allNewsMediatorLiveData
+    }
+
+    fun saveAllNews(articles: List<Article>) {
+        newsRepository.saveAllNews(articles)
+    }
+
+    fun updateNews(article: Article) {
+        newsRepository.updateNews(article)
+    }
+
+    fun deleteAllNews() {
+        newsRepository.deleteAll()
     }
 
 
