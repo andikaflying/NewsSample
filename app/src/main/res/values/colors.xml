@@ -7,4 +7,27 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Color Palette. Reference : https://material.io/design/color/the-color-system.html#tools-for-picking-colors -->
+    <color name="gray_100">#F5F5F5</color>
+    <color name="gray_200">#EEEEEE</color>
+    <color name="gray_300">#E0E0E0</color>
+    <color name="gray_400">#BDBDBD</color>
+    <color name="gray_500">#9E9E9E</color>
+    <color name="gray_600">#757575</color>
+    <color name="gray_800">#444444</color>
+    <color name="blue_gray_50">#ECEFF1</color>
+    <color name="blue_gray_200">#B0BEC5</color>
+    <color name="green_200">#A5D6A7</color>
+    <color name="green_500">#8BC34A</color>
+    <color name="green_900">#1B5E20</color>
+    <color name="light_green_400">#9CCC65</color>
+    <color name="light_green_500">#8BC34A</color>
+    <color name="indigo_700">#303F9F</color>
+    <color name="pink_A200">#FF4A4A</color>
+    <color name="green_default">#87C70F</color>
+    <color name="soft_red_default">#EA6969</color>
+    <color name="light_grey_default">#D5D5D5</color>
+    <color name="orange_500">#FF9800</color>
+    <color name="red_500">#F44336</color>
 </resources>
