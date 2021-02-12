@@ -1,6 +1,7 @@
 package app.andika.newssample.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
@@ -48,6 +49,7 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>() {
         customProgressDialog.setDialog(true)
 
         if (ConnectivityReceiver.isConnected) {
+            newsViewModel.deleteAllNews()
             newsViewModel.displayNewsList(QUERY).observe(viewLifecycleOwner, Observer {
                 if (it != null) {
                     customProgressDialog.setDialog(false)
@@ -77,6 +79,12 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>() {
                     }
                 }
             })
+
+//            newsViewModel.getAllNews().observe(viewLifecycleOwner, Observer {
+//                if (it != null) {
+//                    Log.e(TAG, "Local Storage List size = " + it.size)
+//                }
+//            })
         } else {
             customProgressDialog.setDialog(false)
             GeneralDialog.displayNetworkErrorDialog(requireActivity())
