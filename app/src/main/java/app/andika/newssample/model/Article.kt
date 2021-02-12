@@ -13,6 +13,8 @@ data class Article(
     val url: String?,
     val urlToImage: String?
 ) : Parcelable {
+    var isFavorite: Boolean? = false
+
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),

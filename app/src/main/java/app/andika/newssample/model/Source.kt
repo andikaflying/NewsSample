@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Source(
-    val id: Any,
+    val id: Any?,
     val name: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
