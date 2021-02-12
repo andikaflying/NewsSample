@@ -16,10 +16,10 @@ class NewsUnitTest {
     @Before
     fun setup() {
         completedArticle = Article("Robert Q", "This is sample content", "Some description",
-                "12 February 2020", Source("1", "some source"), "News Title",
+                "12 February 2020", "News Title",
                 "http://google.com", "http://google.com/test.jpg")
         uncompletedArticle = Article(null, "This is sample content", null,
-                "12 February 2020", Source(null, "some source"), "News Title",
+                "12 February 2020", "News Title",
                 null, null)
     }
 
@@ -47,8 +47,6 @@ class NewsUnitTest {
         assertNotNull(completedArticle.content)
         assertNotNull(completedArticle.description)
         assertNotNull(completedArticle.publishedAt)
-        assertNotNull(completedArticle.source.id)
-        assertNotNull(completedArticle.source.name)
         assertNotNull(completedArticle.title)
         assertNotNull(completedArticle.url)
         assertNotNull(completedArticle.urlToImage)

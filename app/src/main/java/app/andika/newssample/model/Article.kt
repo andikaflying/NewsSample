@@ -2,25 +2,27 @@ package app.andika.newssample.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "article")
 data class Article(
     val author: String?,
     val content: String?,
     val description: String?,
     val publishedAt: String?,
-    val source: Source,
     val title: String?,
     val url: String?,
     val urlToImage: String?
 ) : Parcelable {
     var isFavorite: Boolean? = false
+    @PrimaryKey(autoGenerate = true) var id: Long = 0
 
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        TODO("source"),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
