@@ -2,9 +2,14 @@
 buildscript {
     ext.kotlin_version = "1.4.21"
     ext.hilt_version = '2.28-alpha'
+    ext.uiAutomatorVersion = '2.2.0-alpha4'
+    ext.coreTestingVersion = '2.0.0'
+    ext.espressoVersion = '3.1.0-alpha4'
+
     repositories {
         google()
         jcenter()
+        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
@@ -20,6 +25,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap' }
     }
 }
 
