@@ -28,9 +28,9 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvImage.layoutManager = LinearLayoutManager(context)
+        binding.rvNews.layoutManager = LinearLayoutManager(context)
         adapter = NewsAdapter(requireActivity())
-        binding.rvImage.adapter = adapter
+        binding.rvNews.adapter = adapter
 
         displayList()
 
@@ -54,14 +54,14 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>() {
 
                     if (it.throwable == null) {
                         if (it.articles!!.size > 0) {   //Success response
-                            binding.rvImage.visibility = View.VISIBLE
+                            binding.rvNews.visibility = View.VISIBLE
                             binding.tvMessageNotFound.visibility = View.GONE
 
                             newsList = it.articles.toMutableList()
                             adapter.submitList(newsList)
                             adapter.notifyDataSetChanged()
                         } else {    //Success but empty list
-                            binding.rvImage.visibility = View.GONE
+                            binding.rvNews.visibility = View.GONE
                             binding.tvMessageNotFound.visibility = View.VISIBLE
                         }
                     } else {

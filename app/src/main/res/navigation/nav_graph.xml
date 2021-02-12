@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/NewsFragment">
+    app:startDestination="@id/newsFragment">
 
     <fragment
-        android:id="@+id/NewsFragment"
+        android:id="@+id/newsFragment"
         android:name="app.andika.newssample.ui.NewsFragment"
         android:label="@string/news_fragment_label"
         tools:layout="@layout/fragment_news">
 
         <action
             android:id="@+id/action_NewsFragment_to_NewsDetailFragment"
-            app:destination="@id/NewsDetailFragment" />
+            app:destination="@id/newsDetailFragment" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/NewsDetailFragment"
+        android:id="@+id/newsDetailFragment"
         android:name="app.andika.newssample.ui.NewsDetailFragment"
         android:label="@string/news_detail_fragment_label"
         tools:layout="@layout/fragment_news_detail">
