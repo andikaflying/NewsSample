@@ -33,7 +33,7 @@ class MainActivityTest {
     }
 
     @Test fun checkHomeIcon_OpenAndCloseNavigation() {
-        Thread.sleep(2000)  //Wait news loading dialog gone
+        Thread.sleep(5000)  //Wait news loading dialog gone
         onView(withId(R.id.drawer_layout)).check(matches(DrawerMatchers.isClosed(Gravity.START)))
 
         clickOnHomeIconToOpenNavigationDrawer()
@@ -41,7 +41,7 @@ class MainActivityTest {
     }
 
     @Test fun checkHomeIcon_checkHomePage() {
-        Thread.sleep(2000)  //Wait news loading dialog gone
+        Thread.sleep(5000)  //Wait news loading dialog gone
         clickOnHomeIconToOpenNavigationDrawer()
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_home))
         
