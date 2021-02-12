@@ -33,14 +33,14 @@ class NewsAdapter(public val activity: Activity) : ListAdapter<Article, NewsAdap
         val news = getItem(position)
 
         holder.apply {
-            bind(news, createDetailOnClickListener(news), activity)
+            bind(news, createDetailOnClickListener(position), activity)
             itemView.tag = news
         }
     }
 
-    private fun createDetailOnClickListener(news: Article): View.OnClickListener {
+    private fun createDetailOnClickListener(position: Int): View.OnClickListener {
         return View.OnClickListener {
-            val directions = NewsFragmentDirections.actionNewsFragmentToNewsDetailFragment(news)
+            val directions = NewsFragmentDirections.actionNewsFragmentToNewsDetailFragment(position, currentList.size)
             it.findNavController().navigate(directions)
         }
     }

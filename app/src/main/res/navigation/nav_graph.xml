@@ -24,7 +24,12 @@
         tools:layout="@layout/fragment_news_detail">
 
         <argument
-            android:name="selectedArticle"
-            app:argType="app.andika.newssample.model.Article" />
+            android:name="index"
+            app:argType="integer" />
+
+        <argument
+            android:name="maxList"
+            app:argType="integer" />
+
     </fragment>
 </navigation>
