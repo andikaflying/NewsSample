@@ -1,14 +1,17 @@
 package app.andika.newssample.repository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import app.andika.newssample.core.api.APIList
 import app.andika.newssample.databases.NewsDAO
 import app.andika.newssample.model.AllNewsResponse
 import app.andika.newssample.model.Article
+import app.andika.newssample.ui.NewsFragment
 import app.andika.newssample.utilities.API_KEY
 import app.andika.newssample.utilities.ENDPOINT_DISPLAY_NEWS
+import app.andika.newssample.utilities.IO_EXECUTOR
 import app.andika.newssample.utilities.runOnBackgroundThread
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Call
@@ -24,6 +27,7 @@ class NewsRepository @Inject constructor(
     val apiList: APIList,
     val newsDAO: NewsDAO
 ) {
+    private val TAG = NewsRepository::class.java.name
 
     fun displayNewsList(query: String) : LiveData<AllNewsResponse> {
         val newsListResponse: MutableLiveData<AllNewsResponse> = MutableLiveData()
@@ -50,7 +54,9 @@ class NewsRepository @Inject constructor(
     }
 
     fun saveAllNews(articleList: List<Article>) {
+        Log.e(TAG, "Size " + articleList.size)
         val insertCallable = Callable { newsDAO.insertAll(articleList) }
+        val future : Future<Unit> = IO_EXECUTOR.submit(insertCallable)
     }
 
     fun updateNews(article: Article) {
@@ -63,6 +69,11 @@ class NewsRepository @Inject constructor(
         runOnBackgroundThread {
             newsDAO.deleteAll()
         }
+    }
+
+    fun getNews(index : Int) : LiveData<Article> {
+        Log.e(TAG, "index get news = " + index + "access repository")
+        return newsDAO.getNews(index)
     }
 
 }

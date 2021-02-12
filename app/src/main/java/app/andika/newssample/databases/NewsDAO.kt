@@ -7,7 +7,7 @@ import app.andika.newssample.model.Article
 @Dao
 interface NewsDAO {
 
-    @Query("SELECT * FROM article ORDER BY id DESC")
+    @Query("SELECT * FROM article")
     fun getAll(): LiveData<List<Article>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -22,6 +22,6 @@ interface NewsDAO {
     @Query("DELETE FROM article")
     public fun deleteAll()
 
-    @Query("SELECT * FROM article WHERE id = :id")
-    fun getNews(id: Long): Article
+    @Query("SELECT * FROM article LIMIT :index,1")
+    fun getNews(index: Int): LiveData<Article>
 }
