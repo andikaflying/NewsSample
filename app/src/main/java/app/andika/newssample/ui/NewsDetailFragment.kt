@@ -2,27 +2,54 @@ package app.andika.newssample.ui
 
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import app.andika.newssample.R
-import app.andika.newssample.databinding.FragmentNewsBinding
 import app.andika.newssample.databinding.FragmentNewsDetailBinding
 import app.andika.newssample.model.Article
 import app.andika.newssample.utilities.touch.OnSwipeTouchListener
+import app.andika.newssample.viewmodel.NewsViewModel
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class NewsDetailFragment : BaseFragment<FragmentNewsDetailBinding>()  {
-
+    private val TAG = NewsDetailFragment::class.java.name
+    val newsViewModel: NewsViewModel by viewModels()
+    var newsIndex: Int = 0
+    var maxNewsIndex: Int = 0
+    val RIGHT = "right"
+    val LEFT = "left"
+    val INDEX = "index"
+    val MAX_NEWS_INDEX = "max list index"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var selectedArticle = NewsDetailFragmentArgs.fromBundle(requireArguments()).selectedArticle
-        displayDetail(selectedArticle)
+        if (arguments != null) {
+            if (requireArguments().containsKey(INDEX) && requireArguments().containsKey(MAX_NEWS_INDEX)) {
+                newsIndex = requireArguments().getInt(INDEX)
+                maxNewsIndex = requireArguments().getInt(MAX_NEWS_INDEX)
+            } else {
+                newsIndex = NewsDetailFragmentArgs.fromBundle(requireArguments()).index
+                maxNewsIndex = NewsDetailFragmentArgs.fromBundle(requireArguments()).maxList - 1
+            }
+
+            Log.e(TAG, "Max news index = " + maxNewsIndex + "newsIndex = " + newsIndex)
+        }
+
+        newsViewModel.getNews(newsIndex).observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                Log.e(TAG, "News = " + it.toString())
+                displayDetail(it)
+            }
+        })
+
         setSwipeListener(view)
     }
 
@@ -32,7 +59,11 @@ class NewsDetailFragment : BaseFragment<FragmentNewsDetailBinding>()  {
 
     fun displayDetail(selectedArticle: Article) {
         binding.tvAuthor.setText(selectedArticle.author)
-        binding.tvContent.setText(Html.fromHtml(selectedArticle.content).toString())
+
+        if (selectedArticle.content != null) {
+            binding.tvContent.setText(Html.fromHtml(selectedArticle.content).toString())
+        }
+
         binding.tvTitle.setText(selectedArticle.title)
         Glide.with(this)
             .load(selectedArticle.urlToImage)
@@ -43,12 +74,12 @@ class NewsDetailFragment : BaseFragment<FragmentNewsDetailBinding>()  {
     fun setSwipeListener(view: View) {
         view.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeRight() {
-                goToOtherPage("right")
+                goToOtherPage(RIGHT)
                 Toast.makeText(requireActivity(), "right", Toast.LENGTH_SHORT).show();
             }
 
             override fun onSwipeLeft() {
-                goToOtherPage("left")
+                goToOtherPage(LEFT)
                 Toast.makeText(requireActivity(), "left", Toast.LENGTH_SHORT).show();
             }
 
@@ -62,12 +93,25 @@ class NewsDetailFragment : BaseFragment<FragmentNewsDetailBinding>()  {
         })
     }
 
-    fun goToOtherPage(side : String) {
-        val fragment = NewsDetailFragment()
-        val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
-        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-        transaction.replace(R.id.nav_host_fragment, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+    fun goToOtherPage(side: String) {
+        var otherPageIndex = 0;
+        if (side.equals(RIGHT)) {
+            otherPageIndex = newsIndex - 1; //go to next page
+        } else if (side.equals(LEFT)) {
+            otherPageIndex = newsIndex + 1; //go to next page
+        }
+
+        if ((otherPageIndex >= 0) && (otherPageIndex <= maxNewsIndex)) {
+            val bundle = Bundle()
+            bundle.putInt(INDEX, otherPageIndex)
+            bundle.putInt(MAX_NEWS_INDEX, maxNewsIndex)
+            val fragment = NewsDetailFragment()
+            fragment.arguments = bundle
+            val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+            transaction.replace(R.id.nav_host_fragment, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
     }
 }

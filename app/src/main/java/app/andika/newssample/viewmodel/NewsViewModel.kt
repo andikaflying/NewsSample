@@ -1,5 +1,6 @@
 package app.andika.newssample.viewmodel
 
+import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
@@ -33,6 +34,14 @@ class NewsViewModel @ViewModelInject public constructor(
 
     fun deleteAllNews() {
         newsRepository.deleteAll()
+    }
+
+    fun getNews(index : Int) : LiveData<Article> {
+        return newsRepository.getNews(index)
+    }
+
+    fun getAllNews() : LiveData<List<Article>> {
+        return newsRepository.getAllNews()
     }
 
 
