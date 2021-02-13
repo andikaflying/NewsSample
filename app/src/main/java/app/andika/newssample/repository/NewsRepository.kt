@@ -37,6 +37,7 @@ class NewsRepository @Inject constructor(
             override fun onResponse(call: Call<AllNewsResponse>, response: Response<AllNewsResponse>) {
                 if (response.isSuccessful) {
                     newsListResponse.value = response.body()
+                    saveAllNews(response.body()?.articles!!)
                 }
             }
 

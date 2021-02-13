@@ -36,20 +36,34 @@ class NewsDetailFragment : BaseFragment<FragmentNewsDetailBinding>()  {
             if (requireArguments().containsKey(INDEX) && requireArguments().containsKey(MAX_NEWS_INDEX)) {
                 newsIndex = requireArguments().getInt(INDEX)
                 maxNewsIndex = requireArguments().getInt(MAX_NEWS_INDEX)
+
+                val observer = Observer<Article> {
+                    if (it != null) {
+                        Log.e(TAG, "News = " + it.toString())
+                        displayDetail(it)
+                    }
+                }
+
+                newsViewModel.getNews(newsIndex).observe(viewLifecycleOwner, observer)
             } else {
-                newsIndex = NewsDetailFragmentArgs.fromBundle(requireArguments()).index
-                maxNewsIndex = NewsDetailFragmentArgs.fromBundle(requireArguments()).maxList - 1
+                val selectedArticle = NewsDetailFragmentArgs.fromBundle(requireArguments()).selectedArticle
+                displayDetail(selectedArticle)
+
+                val observer = Observer<List<Article>> {
+                    if (it != null) {
+                        Log.e(TAG, "Size : " + it.size)
+                        newsIndex = it.indexOf(selectedArticle)
+                        maxNewsIndex = it.size - 1
+                        Log.e(TAG, "Max news index = " + maxNewsIndex + "newsIndex = " + newsIndex)
+                        newsViewModel.getAllNews().removeObservers(this)
+                    }
+                }
+
+                newsViewModel.getAllNews().observe(viewLifecycleOwner, observer)
             }
 
             Log.e(TAG, "Max news index = " + maxNewsIndex + "newsIndex = " + newsIndex)
         }
-
-        newsViewModel.getNews(newsIndex).observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                Log.e(TAG, "News = " + it.toString())
-                displayDetail(it)
-            }
-        })
 
         setSwipeListener(view)
     }
