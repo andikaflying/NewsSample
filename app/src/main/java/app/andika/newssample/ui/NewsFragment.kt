@@ -35,9 +35,9 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>() {
 
         displayList()
 
-//        binding.imbSearch.setOnClickListener {
-//            videoViewModel.search(binding.edtSearch.text.toString())
-//        }
+        binding.imbSearch.setOnClickListener {
+            newsViewModel.search(binding.edtSearch.text.toString())
+        }
     }
 
     override fun getLayoutRes(): Int {
@@ -49,6 +49,7 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>() {
         customProgressDialog.setDialog(true)
 
         if (ConnectivityReceiver.isConnected) {
+            newsViewModel.deleteAllNews()
             newsViewModel.displayNewsList(QUERY).observe(viewLifecycleOwner, Observer {
                 if (it != null) {
                     customProgressDialog.setDialog(false)
@@ -58,8 +59,8 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>() {
                             binding.rvNews.visibility = View.VISIBLE
                             binding.tvMessageNotFound.visibility = View.GONE
 
-                            newsList = it.articles.toMutableList()
-                            newsViewModel.saveAllNews(it.articles!!)
+                            newsList = it.articles!!.toMutableList()
+//                            newsViewModel.saveAllNews(it.articles!!)
                             adapter.submitList(newsList)
                             adapter.notifyDataSetChanged()
                         } else {    //Success but empty list
@@ -78,11 +79,11 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>() {
                 }
             })
 
-//            newsViewModel.getAllNews().observe(viewLifecycleOwner, Observer {
-//                if (it != null) {
-//                    Log.e(TAG, "Local Storage List size = " + it.size)
-//                }
-//            })
+            newsViewModel.getAllNews().observe(viewLifecycleOwner, Observer {
+                if (it != null) {
+                    Log.e(TAG, "Local Storage List size = " + it.size)
+                }
+            })
         } else {
             customProgressDialog.setDialog(false)
             GeneralDialog.displayNetworkErrorDialog(requireActivity())

@@ -44,5 +44,19 @@ class NewsViewModel @ViewModelInject public constructor(
         return newsRepository.getAllNews()
     }
 
+    public fun search(keyword : String) {
+        newsListLiveData.value.let {
+            allNewsResponse ->
+            if (keyword.isNotEmpty()) {
+                val newResponse = allNewsResponse!!.copy()
+                newResponse!!.articles = newResponse.articles?.filter {
+                    it -> it.title?.contains(keyword) == true || it.author?.contains(keyword) == true
+                }
 
+                allNewsMediatorLiveData.value = newResponse
+            } else {
+                allNewsMediatorLiveData.value = allNewsResponse
+            }
+        }
+    }
 }

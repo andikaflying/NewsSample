@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class AllNewsResponse(
-    val articles: List<Article>?,
+    var articles: List<Article>?,
     val status: String?,
     val totalResults: Int?
 ) : Parcelable {
