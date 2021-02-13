@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import app.andika.newssample.R
 import app.andika.newssample.databinding.FragmentNewsDetailBinding
 import app.andika.newssample.model.Article
+import app.andika.newssample.utilities.runOnBackgroundThread
 import app.andika.newssample.utilities.touch.OnSwipeTouchListener
 import app.andika.newssample.viewmodel.NewsViewModel
 import com.bumptech.glide.Glide
@@ -69,26 +70,33 @@ class NewsDetailFragment : BaseFragment<FragmentNewsDetailBinding>()  {
             .load(selectedArticle.urlToImage)
             .placeholder(R.drawable.ic_placeholder)
             .into(binding.ivNews)
+
+        Log.e(TAG, "is favorite = " + selectedArticle.isFavorite)
+        setFavoriteIcon(selectedArticle.isFavorite!!)
+
+        binding.imvFavorite.setOnClickListener {
+            if (selectedArticle.isFavorite == true) {
+                selectedArticle.isFavorite = false;
+            } else {
+                selectedArticle.isFavorite = true;
+            }
+
+            setFavoriteIcon(selectedArticle.isFavorite!!)
+
+            runOnBackgroundThread {
+                newsViewModel.updateNews(selectedArticle)
+            }
+        }
     }
 
     fun setSwipeListener(view: View) {
         view.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeRight() {
                 goToOtherPage(RIGHT)
-                Toast.makeText(requireActivity(), "right", Toast.LENGTH_SHORT).show();
             }
 
             override fun onSwipeLeft() {
                 goToOtherPage(LEFT)
-                Toast.makeText(requireActivity(), "left", Toast.LENGTH_SHORT).show();
-            }
-
-            override fun onSwipeTop() {
-                Toast.makeText(requireActivity(), "top", Toast.LENGTH_SHORT).show();
-            }
-
-            override fun onSwipeBottom() {
-                Toast.makeText(requireActivity(), "bottom", Toast.LENGTH_SHORT).show();
             }
         })
     }
@@ -112,6 +120,14 @@ class NewsDetailFragment : BaseFragment<FragmentNewsDetailBinding>()  {
             transaction.replace(R.id.nav_host_fragment, fragment)
             transaction.addToBackStack(null)
             transaction.commit()
+        }
+    }
+
+    fun setFavoriteIcon(isFavorited : Boolean) {
+        if (isFavorited == true) {
+            binding.imvFavorite.setBackgroundTintList(resources.getColorStateList(R.color.red_500))
+        } else {
+            binding.imvFavorite.setBackgroundTintList(resources.getColorStateList(R.color.black))
         }
     }
 }
