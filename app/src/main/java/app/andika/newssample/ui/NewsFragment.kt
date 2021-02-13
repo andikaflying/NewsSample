@@ -49,7 +49,6 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>() {
         customProgressDialog.setDialog(true)
 
         if (ConnectivityReceiver.isConnected) {
-            newsViewModel.deleteAllNews()
             newsViewModel.displayNewsList(QUERY).observe(viewLifecycleOwner, Observer {
                 if (it != null) {
                     customProgressDialog.setDialog(false)
@@ -60,14 +59,13 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>() {
                             binding.tvMessageNotFound.visibility = View.GONE
 
                             newsList = it.articles.toMutableList()
+                            newsViewModel.saveAllNews(it.articles!!)
                             adapter.submitList(newsList)
                             adapter.notifyDataSetChanged()
                         } else {    //Success but empty list
                             binding.rvNews.visibility = View.GONE
                             binding.tvMessageNotFound.visibility = View.VISIBLE
                         }
-
-                        newsViewModel.saveAllNews(it.articles!!)
                     } else {
                         GeneralDialog.displayNetworkErrorDialog(requireActivity())
                     }
