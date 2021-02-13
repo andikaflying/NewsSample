@@ -18,7 +18,7 @@ class NewsUnitTest {
         completedArticle = Article("Robert Q", "This is sample content", "Some description",
                 "12 February 2020", "News Title",
                 "http://google.com", "http://google.com/test.jpg")
-        uncompletedArticle = Article(null, "This is sample content", null,
+        uncompletedArticle = Article(null, null, null,
                 "12 February 2020", "News Title",
                 null, null)
     }
@@ -54,7 +54,6 @@ class NewsUnitTest {
 
     @Test
     fun testNews_ifNewsHasUncompletedInformation() {
-        assertNotNull(uncompletedArticle.content)
         assertNotNull(uncompletedArticle.title)
         assertNotNull(uncompletedArticle.publishedAt)
     }
