@@ -50,7 +50,8 @@ class NewsViewModel @ViewModelInject public constructor(
             if (keyword.isNotEmpty()) {
                 val newResponse = allNewsResponse!!.copy()
                 newResponse!!.articles = newResponse.articles?.filter {
-                    it -> it.title?.contains(keyword) == true || it.author?.contains(keyword) == true
+                    it -> it.title?.toLowerCase()?.contains(keyword.toLowerCase()) == true ||
+                          it.author?.toLowerCase()?.contains(keyword.toLowerCase()) == true
                 }
 
                 allNewsMediatorLiveData.value = newResponse

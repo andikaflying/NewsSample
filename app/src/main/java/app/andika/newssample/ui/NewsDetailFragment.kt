@@ -130,7 +130,12 @@ class NewsDetailFragment : BaseFragment<FragmentNewsDetailBinding>()  {
             val fragment = NewsDetailFragment()
             fragment.arguments = bundle
             val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
-            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+            if (side.equals(LEFT)) {
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+            } else {
+                transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+            }
+
             transaction.replace(R.id.nav_host_fragment, fragment)
             transaction.addToBackStack(null)
             transaction.commit()
