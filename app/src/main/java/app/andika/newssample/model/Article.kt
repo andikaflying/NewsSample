@@ -15,7 +15,7 @@ data class Article(
     val url: String?,
     val urlToImage: String?
 ) : Parcelable {
-    var isFavorite: Boolean? = false
+    var isFavorite: Boolean = false
     @PrimaryKey(autoGenerate = true) var id: Long = 0
 
     constructor(parcel: Parcel) : this(
